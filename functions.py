@@ -154,9 +154,12 @@ def getClosestString(str1, substr):
 
 
 def print_message(message):
-    chat_id = message.chat.id
-    chat_name = message.chat.title
-    sender_id = message.from_user.id
-    sender_name = message.from_user.first_name
-    text = message.text.replace('\n', ' ')
-    print(f"Chat - {chat_name}, chat id: {chat_id}, sender: {sender_name}, sender_id: {sender_id}, text: {text}")
+    try:
+        chat_id = message.chat.id
+        chat_name = message.chat.title
+        sender_id = message.from_user.id
+        sender_name = message.from_user.first_name
+        text = message.text.replace('\n', ' ')
+        print(f"Chat - {chat_name}, chat id: {chat_id}, sender: {sender_name}, sender_id: {sender_id}, text: {text}")
+    except Exception as e:
+        print("Ошибка вывода сообщения: " + e)
