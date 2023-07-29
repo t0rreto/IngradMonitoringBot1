@@ -74,9 +74,10 @@ def replyBotMessage(message, entities, slug_from_url):
 
 
 def replyBotMessageKeyWordsByManyData(message, entities, url):
+    mergeText = message
     if url:
         urlText = requests.get(url).text
-        mergeText = message + " " + urlText
+        mergeText += " " + urlText
 
     generalTag: str = re.sub("[\W]", "_", message.split("\n")[0])
     tags = taggingManyData(mergeText, generalTag)
@@ -150,3 +151,12 @@ def getClosestString(str1, substr):
             maxStrI = se
 
     return minStrI, maxStrI, resEnd
+
+
+def print_message(message):
+    chat_id = message.chat.id
+    chat_name = message.chat.title
+    sender_id = message.from_user.id
+    sender_name = message.from_user.first_name
+    text = message.text.replace('\n', ' ')
+    print(f"Chat - {chat_name}, chat id: {chat_id}, sender: {sender_name}, sender_id: {sender_id}, text: {text}")
