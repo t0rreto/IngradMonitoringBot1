@@ -54,10 +54,11 @@ tagAssociation = [{'slug': 'JKLesoparkoviy', 'name': 'Лесопарковый'}
                   {'slug': 'jkodingrad5korpus', 'name': 'Отсутствует'},
                   {'slug': 'np12k2s9', 'name': 'НовоеПушкино'},
                   {'slug': '1295224440', 'name': 'ФилатовЛуг'},
-                  {'slug': '1445385553', 'name': 'НовоеПушкино'}]
-
+                  {'slug': '1445385553', 'name': 'НовоеПушкино'},
+                  {'slug': 'club121956122', 'name': 'НовоеПушкино'}]
 
 tagWithKeyWordsAssociation = []
+
 
 def tagingChat(slug, chatTitle):
     name = ""

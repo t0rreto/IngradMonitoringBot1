@@ -36,6 +36,8 @@ def forward_yk(message):
     slug = ""
     if entities:
         slug = entities[0].url.split("/")[-2]
+        if slug == 'vk.com':
+            slug = entities[2].url.split("/")[-1]
     message = replyBotMessage(message.text, entities, slug)
     bot.send_message(INGRAD_YK_ID, message[0], entities=message[1])
 
