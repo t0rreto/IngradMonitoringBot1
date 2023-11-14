@@ -13,6 +13,8 @@ BRAND_SOCIAL_ID = -1001972022129
 INGRAD_YK_ID = -1001807530118
 INGRAD_SOCIAL_ID = -1001696121895
 
+INGRAD_YK_2_ID = -1002056008445
+
 
 BRAND_BOT_ID = 953170029
 ADMIN_ID = 559828927
@@ -31,7 +33,6 @@ def handler_message(message):
 
 
 def forward_yk(message):
-    sender_id = message.from_user.id
     entities = message.entities
     slug = ""
     if entities:
@@ -39,7 +40,8 @@ def forward_yk(message):
         if slug == 'vk.com':
             slug = entities[2].url.split("/")[-1]
     message = replyBotMessage(message.text, entities, slug)
-    bot.send_message(INGRAD_YK_ID, message[0], entities=message[1])
+    bot.send_message(chat_id=INGRAD_YK_ID, text=message[0], entities=message[1])
+    bot.send_message(chat_id=INGRAD_YK_2_ID, text=message[0], entities=message[1], reply_to_message_id=message[2])
 
 
 def forward_social(message):

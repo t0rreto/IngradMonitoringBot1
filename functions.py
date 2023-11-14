@@ -59,15 +59,31 @@ tagAssociation = [{'slug': 'JKLesoparkoviy', 'name': 'Лесопарковый'}
 
 tagWithKeyWordsAssociation = []
 
+theme_id_Association = {
+    'Лесопарковый': 79,
+    'ОдинградЛесной': 82,
+    'ФилатовЛуг': 73,
+    'НовоеПушкино': 86,
+    'Михайлова31': 88,
+    'КутузовGRADI': 90,
+    'Преображение': 92,
+    'ОдинградСемейный': 94,
+    'СеребряныйПарк': 96,
+    'Одинград': 98,
+    'TopHILLS': 100,
+    'ОдинградЦентральный': 102,
+    'НовоеМедведково': 104,
+    'КутузовGRADII': 106,
+    'Отсутствует': 49
+}
 
-def tagingChat(slug, chatTitle):
-    name = ""
+
+def tagingChat(slug, chat_title):
     for tag in tagAssociation:
-        if slug == tag['slug'] or slug == tag['slug']:
-            name = tag['name']
-    if name == "":
-        name = chatTitle
-    return name
+        if slug == tag['slug']:
+            return {"name": tag['name'], 'theme_id': theme_id_Association[tag['name']]}
+
+    return {"name": chat_title, 'theme_id': theme_id_Association['Отсутствует']}
 
 
 def taggingManyData(text, chatTitle):
@@ -86,7 +102,10 @@ def taggingManyData(text, chatTitle):
 
 def replyBotMessage(message, entities, slug_from_url):
     len1 = len(message)
-    tag: str = tagingChat(slug_from_url, message.split("\n")[0].replace(" ", "_"))
+    data = tagingChat(slug_from_url, message.split("\n")[0].replace(" ", "_"))
+    tag = data['name']
+    theme_id = data['theme_id']
+
     message = f"#{tag}\n" + "\n".join(message.split("\n")[1:])
     len2 = len(message)
     minus = 0
@@ -98,7 +117,7 @@ def replyBotMessage(message, entities, slug_from_url):
         for ent in entities:
             ent.offset += minus
 
-    return message, entities
+    return message, entities, theme_id
 
 
 def replyBotMessageKeyWordsByManyData(message, entities, url):
