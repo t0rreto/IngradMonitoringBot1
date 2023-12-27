@@ -7,7 +7,7 @@ class TableConnector:
     connector = pygsheets.authorize(service_file="auth-google.json")
 
     def __init__(self):
-        self.worksheet: Worksheet = self.connector.open_by_key(config.SHEET_ID)[1]
+        self.worksheet: Worksheet = self.connector.open_by_key(config.SHEET_ID)[2]
 
     def get_free_id(self):
         worksheet_values = self.worksheet.get_all_values()
