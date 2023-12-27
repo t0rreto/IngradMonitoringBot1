@@ -16,7 +16,9 @@ def handler_message(message):
             forward_yk(message)
         if message.chat.id == BRAND_SOCIAL_ID:
             forward_social(message)
+        print("Сохрание в таблицу")
         save_to_table(message, table_connector)
+        print("Успешно")
     except Exception as e:
         print(f"Ошибка при пересылке сообщения: {e}")
 
