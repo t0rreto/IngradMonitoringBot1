@@ -1,33 +1,22 @@
 import telebot
-
+from config import *
 from functions import *
+from entities import *
 
-bot_token = '6038540603:AAGOnN0O42xOZCLGs4VIr0DkAwwCUeKPIFM'
 
 # Создаем объект бота
 bot = telebot.TeleBot(bot_token)
-
-BRAND_YK_ID = -1001832139525
-BRAND_SOCIAL_ID = -1001972022129
-
-INGRAD_YK_ID = -1001807530118
-INGRAD_SOCIAL_ID = -1001696121895
-
-INGRAD_YK_2_ID = -1002056008445
-
-
-BRAND_BOT_ID = 953170029
-ADMIN_ID = 559828927
+table_connector = TableConnector()
 
 
 @bot.message_handler(func=lambda message: True)
 def handler_message(message):
     try:
-        print_message(message)
         if message.chat.id == BRAND_YK_ID:
             forward_yk(message)
         if message.chat.id == BRAND_SOCIAL_ID:
             forward_social(message)
+        save_to_table(message, table_connector)
     except Exception as e:
         print(f"Ошибка при пересылке сообщения: {e}")
 

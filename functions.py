@@ -1,6 +1,7 @@
 import re
-
+import datetime
 import requests
+import telebot.types
 
 tagAssociation = [{'slug': 'JKLesoparkoviy', 'name': 'Лесопарковый'},
                   {'slug': 'odingrad_lesnoy', 'name': 'ОдинградЛесной'},
@@ -204,6 +205,32 @@ def getClosestString(str1, substr):
             maxStrI = se
 
     return minStrI, maxStrI, resEnd
+
+
+def save_to_table(message: telebot.types.Message, table_connector):
+    text = message.text
+
+    match = re.search(r"\| (\d{2}\.\d{2}\.\d{4})\s+(\d{2}:\d{2})", text)
+    if match:
+        param1_date = match.group(1)
+        param2_time = match.group(2)
+    else:
+        param1_date = "Нет"
+        param2_time = "Нет"
+
+    dt_object = datetime.datetime.fromtimestamp(message.date)
+    param3_time = dt_object.strftime('%d.%m.%y %H:%M')
+
+    if message.entities:
+        param4_url = message.entities[0].url
+    else:
+        param4_url = "Нет"
+
+    param5_text = text.split("\n")[-1]
+    param6_tag = text.split("\n")[0]
+
+    data = [[param1_date, param2_time, param3_time, param4_url, param5_text, param6_tag]]
+    table_connector.insert_row(data)
 
 
 def print_message(message):
