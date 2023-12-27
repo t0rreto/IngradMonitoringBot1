@@ -224,7 +224,7 @@ def save_to_table(message: telebot.types.Message, table_connector):
     param3_time = dt_object.strftime('%d.%m.%y %H:%M')
 
     if message.entities:
-        param4_url = message.entities[0].url
+        param4_url = message.entities[1].url
     else:
         param4_url = "Нет"
 
