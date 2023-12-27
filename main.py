@@ -31,9 +31,9 @@ def forward_yk(message):
         if slug == 'vk.com':
             slug = entities[2].url.split("/")[-1]
     message = replyBotMessage(message.text, entities, slug)
-    message = bot.send_message(chat_id=INGRAD_YK_ID, text=message[0], entities=message[1])
+    sent_message = bot.send_message(chat_id=INGRAD_YK_ID, text=message[0], entities=message[1])
     bot.send_message(chat_id=INGRAD_YK_2_ID, text=message[0], entities=message[1], reply_to_message_id=message[2])
-    return message
+    return sent_message
 
 
 def forward_social(message):
