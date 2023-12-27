@@ -62,7 +62,9 @@ tagAssociation = [{'slug': 'JKLesoparkoviy', 'name': 'Лесопарковый'}
                   {'slug': 'club146921472', 'name': 'НовоеМедведково'},
                   {'slug': 'serebpark', 'name': 'СеребряныйПарк'},
                   {'slug': 'novoe_pushkino_zhk', 'name': 'НовоеПушкино'},
-                  {'slug': 'NovMed_kor36', 'name': 'НовоеМедведково'}]
+                  {'slug': 'NovMed_kor36', 'name': 'НовоеМедведково'},
+                  {'slug': 'sd_silverpark', 'name': 'СеребряныйПарк'},
+                  {'slug': 'serebpark', 'name': 'СеребряныйПарк'}] 
 
 tagWithKeyWordsAssociation = []
 
