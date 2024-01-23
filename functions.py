@@ -257,8 +257,11 @@ def save_to_table_closed(message: telebot.types.Message, table_connector):
 
     else:
         author_name = forward_json['sender_user']['first_name']
-        author_username = "https://t.me/" + forward_json['sender_user']['username']
-        param7_author = f"{author_name}\n{author_username}"
+        if 'last_name' in forward_json['sender_user']:
+            author_name = author_name + " " + forward_json['sender_user']['last_name']
+        if 'username' in forward_json['sender_user']:
+            author_name = author_name + "\n" + "https://t.me/" + forward_json['sender_user']['username']
+        param7_author = author_name
 
     data = [[param1_date, param2_time, param3_time, param4_url, param5_text, param6_tag, param7_author]]
     table_connector.insert_row(data)
