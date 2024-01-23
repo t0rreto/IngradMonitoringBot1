@@ -247,7 +247,7 @@ def save_to_table_closed(message: telebot.types.Message, table_connector):
     param1_date = dt_with_offset.strftime('%d.%m.%Y')
     param2_time = dt_with_offset.strftime('%H:%M')
     param3_time = dt_with_offset.strftime('%d.%m.%y %H:%M')
-    param4_url = "Закрыйтый чат"
+    param4_url = "Закрытый чат"
     param5_text = message.text
     param6_tag = table_connector.current_source
 
