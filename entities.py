@@ -5,6 +5,7 @@ from pygsheets.worksheet import Worksheet
 
 class TableConnector:
     connector = pygsheets.authorize(service_file="auth-google.json")
+    current_source = ""
 
     def __init__(self):
         self.worksheet: Worksheet = self.connector.open_by_key(config.SHEET_ID)[2]

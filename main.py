@@ -14,13 +14,41 @@ def handler_message(message):
     try:
         if message.chat.id == BRAND_YK_ID:
             sent_message = forward_yk(message)
-            print("Сохрание в таблицу")
-            save_to_table(sent_message, table_connector)
+            save_to_table_brand(sent_message, table_connector)
         if message.chat.id == BRAND_SOCIAL_ID:
             forward_social(message)
-            save_to_table(message, table_connector)
+        if message.chat.id == CLOSED_CHATS_ID:
+            closed_chats_group_handler(message)
+
     except Exception as e:
         print(f"Ошибка при пересылке сообщения: {e}")
+
+
+def closed_chats_group_handler(message):
+    tag_association = {
+        "РС": "RiverSky",
+        "ФР": "Foriver",
+        "ТХ": "TopHILLS",
+        "КГ1": "КутузовGRADI",
+        "КГ2": "КутузовGRADII",
+        "СП": "СеребряныйПарк",
+        "НМ": "НовоеМедведково",
+        "ОС": "ОдинградСемейный",
+        "ОЛ": "ОдинградЛесной",
+        "ОЦ": "ОдинградЦентральный",
+        "ЛП": "Лесопарковый",
+        "НП": "НовоеПушкино",
+        "ПР": "Преображение",
+        "МХ31": "Михайлова31",
+        "НЧ17": "Новочеремушкниская17",
+        "ФЛ": "ФилатовЛуг"
+    }
+    if message.text in tag_association.keys():
+        table_connector.current_source = tag_association[message.text]
+        print(f"Текущий чат пересылки: {table_connector.current_source}")
+        return
+
+    save_to_table_closed(message, table_connector)
 
 
 def forward_yk(message):

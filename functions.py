@@ -2,6 +2,7 @@ import re
 import datetime
 import requests
 import telebot.types
+from datetime import datetime, timedelta
 
 tagAssociation = [{'slug': 'JKLesoparkoviy', 'name': 'Лесопарковый'},
                   {'slug': 'odingrad_lesnoy', 'name': 'ОдинградЛесной'},
@@ -210,7 +211,7 @@ def getClosestString(str1, substr):
     return minStrI, maxStrI, resEnd
 
 
-def save_to_table(message: telebot.types.Message, table_connector):
+def save_to_table_brand(message: telebot.types.Message, table_connector):
     text = message.text
 
     match = re.search(r"\| (\d{2}\.\d{2}\.\d{4})\s+(\d{2}:\d{2})", text)
@@ -221,7 +222,7 @@ def save_to_table(message: telebot.types.Message, table_connector):
         param1_date = "Нет"
         param2_time = "Нет"
 
-    dt_object = datetime.datetime.fromtimestamp(message.date)
+    dt_object = datetime.fromtimestamp(message.date)
     param3_time = dt_object.strftime('%d.%m.%y %H:%M')
 
     if message.entities:
@@ -233,6 +234,33 @@ def save_to_table(message: telebot.types.Message, table_connector):
     param6_tag = text.split("\n")[0]
 
     data = [[param1_date, param2_time, param3_time, param4_url, param5_text, param6_tag]]
+    table_connector.insert_row(data)
+
+
+def save_to_table_closed(message: telebot.types.Message, table_connector):
+    forward_json = message.json['forward_origin']
+
+    timestamp = forward_json['date']
+    dt_utc = datetime.utcfromtimestamp(timestamp)
+    dt_with_offset = dt_utc + timedelta(hours=3)
+
+    param1_date = dt_with_offset.strftime('%d.%m.%Y')
+    param2_time = dt_with_offset.strftime('%H:%M')
+    param3_time = dt_with_offset.strftime('%d.%m.%y %H:%M')
+    param4_url = "Закрыйтый чат"
+    param5_text = message.text
+    param6_tag = table_connector.current_source
+
+    if forward_json['type'] == 'hidden_user':
+        author_name = forward_json['sender_user_name']
+        param7_author = author_name
+
+    else:
+        author_name = forward_json['sender_user']['first_name']
+        author_username = "https://t.me/" + forward_json['sender_user']['username']
+        param7_author = f"{author_name}\n{author_username}"
+
+    data = [[param1_date, param2_time, param3_time, param4_url, param5_text, param6_tag, param7_author]]
     table_connector.insert_row(data)
 
 
